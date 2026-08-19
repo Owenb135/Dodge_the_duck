@@ -1,6 +1,5 @@
 import pgzrun
 import pygame
-
 from pgzClasses import *
 condition = False
 class platform:
@@ -92,6 +91,7 @@ class Plt:
 plt = Plt()
 plt2 = Plt()
 plt3 = Plt()
+scene = "n"
 player = Actor("player.png")
 ICON = "images/icon.png"
 background = "bg.png"
@@ -111,8 +111,8 @@ winAct.height = 32
 GRAVITY = 0.5
 JUMP_STRENGTH = -12
 timer = 0
-button_rect = Rect((125, 120), (150, 50))
-button_rect1 = Rect((300, 120), (150, 50))
+button_rect = Rect((150, 160), (150, 50))
+button_rect1 = Rect((350, 160), (150, 50))
 button_color = (0, 128, 255)  # Default Blue
 TITLE = "Dodge The duck!"
 TITLE_SIZE = 50
@@ -120,6 +120,8 @@ is_fullscreen = False
 
 def toggle_fs():
     global is_fullscreen
+    global scene
+    scene = "Full"
     is_fullscreen = not is_fullscreen
     flags = pygame.FULLSCREEN if is_fullscreen else 0
     screen.surface = pygame.display.set_mode((WIDTH, HEIGHT), flags)
@@ -143,11 +145,20 @@ def update():
     plt.myUpdate(player)
     plt2.myUpdate(player)
     plt3.myUpdate(player)
+    if scene == "n" :
+        print("Running")
+    elif scene == "dead" :
+        print("User is dead, showing revive prompt.")
+    elif scene == "Won" :
+        print("The user has won")
+    elif scene == "Full" :
+        print("Switching to fullscreen.")
 
     if keyboard.ESCAPE:
         exit()
 
 def draw():
+    global scene
     screen.fill("chocolate1")
     draw_sprites()
     plt.draw()
@@ -156,6 +167,7 @@ def draw():
     global win
     screen.blit(win, (200, 570))
     if condition:
+        scene = "dead"
         screen.fill("Orange")
         screen.draw.text("You died, Would you like to continue? ", (200, 100))
         screen.draw.filled_rect(button_rect, button_color)
@@ -173,16 +185,18 @@ def draw():
             fontsize=30
         )
     if player.colliderect(winAct):
+        scene = "Won"
         screen.fill("Orange")
         screen.draw.text("YOU WIN!", (200, 100), fontsize=30, color="white")
-
 
 def on_mouse_down(pos, button):
     global condition
     global button_color
+    global scene
     if button == mouse.LEFT:
         if button_rect.collidepoint(pos):
             condition = False
+            scene = "n"
         if button_rect1.collidepoint(pos):
             exit()
 
