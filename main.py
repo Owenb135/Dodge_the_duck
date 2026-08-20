@@ -1,6 +1,20 @@
+"""(c) 2026 Owenb135
+Listened by: Apache 2.0"""
+# Class imports to avoid the red underlines that are looking for the Type Hints
+from pgzero.screen import Screen
+from pgzero.keyboard import Keyboard
+from pgzero.actor import Actor
+from pygame import Rect
+screen: Screen
+keyboard: Keyboard
+music: any
+
+# Updates the window to be centered instead of in the bottom-right corner
+import os
+os.environ['SDL_VIDEO_CENTERED'] = '1'
+"""Above is the old pgzClasses.py merged into one file."""
 import pgzrun
 import pygame
-from pgzClasses import *
 condition = False
 class platform:
    def __init__(self, x ,y ):
@@ -188,6 +202,11 @@ def draw():
         scene = "Won"
         screen.fill("Orange")
         screen.draw.text("YOU WIN!", (200, 100), fontsize=30, color="white")
+        if keyboard.c:
+            scene = "n"
+            screen.clear()
+            player.x = 400
+            player.y = 565
 
 def on_mouse_down(pos, button):
     global condition
