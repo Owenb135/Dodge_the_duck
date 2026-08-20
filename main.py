@@ -4,7 +4,7 @@ from pgzClasses import *
 condition = False
 class platform:
    def __init__(self, x ,y ):
-       self.image = Actor("platform.png")
+       self.image = Actor("duck.png")
        self.image.x = x
        self.image.y = y
 
@@ -114,7 +114,7 @@ timer = 0
 button_rect = Rect((150, 160), (150, 50))
 button_rect1 = Rect((350, 160), (150, 50))
 button_color = (0, 128, 255)  # Default Blue
-TITLE = "Dodge The duck!"
+TITLE = "Dodge the Duck"
 TITLE_SIZE = 50
 is_fullscreen = False
 
